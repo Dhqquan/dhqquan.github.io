@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.dhquan.cn/2019/07/07/Docker-Hexo%20%E8%BF%81%E7%A7%BB/</loc>
+    
+    <lastmod>2019-07-06T16:58:53.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.dhquan.cn/2019/03/08/Neural-Networks-and-Deep-Learning-Week4/</loc>
     
     <lastmod>2019-03-08T08:48:52.000Z</lastmod>
