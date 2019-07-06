@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="本文记录了在macOS上搭建Hexo博客的完整过程。之所以选择 Hexo + Docker + Github 搭建个人博客，是因为不想在 VPS 上搭建（写博客上传麻烦，之前搭过有被我弄坏了node环境），就准备在Docker上搭建。 DockerDocker安装使用 Homebrew 安装1$ brew cask install docker 更多的安装方法：官方文档Kitematic下载Kit">
+<meta name="keywords" content="建站,Docker,Hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo + Docker + Github 搭建个人博客">
+<meta property="og:url" content="http://blog.dhquan.cn/2019/02/02/Hexo-+-Docker-+-Github-搭建个人博客/index.html">
+<meta property="og:site_name" content="Dhq&#39;s Blog">
+<meta property="og:description" content="本文记录了在macOS上搭建Hexo博客的完整过程。之所以选择 Hexo + Docker + Github 搭建个人博客，是因为不想在 VPS 上搭建（写博客上传麻烦，之前搭过有被我弄坏了node环境），就准备在Docker上搭建。 DockerDocker安装使用 Homebrew 安装1$ brew cask install docker 更多的安装方法：官方文档Kitematic下载Kit">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-02-04T11:32:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo + Docker + Github 搭建个人博客">
+<meta name="twitter:description" content="本文记录了在macOS上搭建Hexo博客的完整过程。之所以选择 Hexo + Docker + Github 搭建个人博客，是因为不想在 VPS 上搭建（写博客上传麻烦，之前搭过有被我弄坏了node环境），就准备在Docker上搭建。 DockerDocker安装使用 Homebrew 安装1$ brew cask install docker 更多的安装方法：官方文档Kitematic下载Kit">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Dhq's Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://blog.dhquan.cn/2019/02/02/Hexo-+-Docker-+-Github-搭建个人博客/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Hexo + Docker + Github 搭建个人博客 | Dhq's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Dhq's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>日程表</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.dhquan.cn/2019/02/02/Hexo-+-Docker-+-Github-搭建个人博客/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Dhq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar2.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dhq's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Hexo + Docker + Github 搭建个人博客
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-02 21:58:00" itemprop="dateCreated datePublished" datetime="2019-02-02T21:58:00+00:00">2019-02-02</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-04 11:32:33" itemprop="dateModified" datetime="2019-02-04T11:32:33+00:00">2019-02-04</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/建站/" itemprop="url" rel="index"><span itemprop="name">建站</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <a href="/2019/02/02/Hexo-+-Docker-+-Github-搭建个人博客/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/02/02/Hexo-+-Docker-+-Github-搭建个人博客/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文记录了在macOS上搭建Hexo博客的完整过程。之所以选择 Hexo + Docker + Github 搭建个人博客，是因为不想在 VPS 上搭建（写博客上传麻烦，之前搭过有被我弄坏了node环境），就准备在Docker上搭建。</p>
+<h1 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h1><h2 id="Docker安装"><a href="#Docker安装" class="headerlink" title="Docker安装"></a>Docker安装</h2><h3 id="使用-Homebrew-安装"><a href="#使用-Homebrew-安装" class="headerlink" title="使用 Homebrew 安装"></a>使用 Homebrew 安装</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> brew cask install docker</span><br></pre></td></tr></table></figure>
+<h3 id="更多的安装方法：官方文档"><a href="#更多的安装方法：官方文档" class="headerlink" title="更多的安装方法：官方文档"></a>更多的安装方法：<a href="https://yeasy.gitbooks.io/docker_practice/install/mac.html" target="_blank" rel="noopener">官方文档</a></h3><h2 id="Kitematic下载"><a href="#Kitematic下载" class="headerlink" title="Kitematic下载"></a>Kitematic下载</h2><p>Kitematic 是 Docker 官方的提供的可视化程序。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> brew cask install kitematic</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="Docker-Hexo-Image"><a href="#Docker-Hexo-Image" class="headerlink" title="Docker-Hexo Image"></a>Docker-Hexo Image</h2><p>能够在 Docker 上运行的 Hexo 镜像。</p>
+<h3 id="1-网上公开的-Image"><a href="#1-网上公开的-Image" class="headerlink" title="1. 网上公开的 Image"></a>1. 网上公开的 Image</h3><p>这个镜像好像有一个 Bug， 所以我用的是第二种方法。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> docker pull iyannik0215/docker-hexo</span><br></pre></td></tr></table></figure>
+<h3 id="2-自己通过-DockerFile-构建-Image"><a href="#2-自己通过-DockerFile-构建-Image" class="headerlink" title="2.自己通过 DockerFile 构建 Image"></a>2.自己通过 DockerFile 构建 Image</h3><h4 id="建立Dockerfile，具体Dockerfile的代码"><a href="#建立Dockerfile，具体Dockerfile的代码" class="headerlink" title="建立Dockerfile，具体Dockerfile的代码"></a>建立Dockerfile，具体Dockerfile的代码</h4><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> mhart/alpine-node:<span class="number">6</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">MAINTAINER</span> dhq , &lt;dhq@dhquan.cn&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span> \</span><br><span class="line">    apk --update --no-progress add git openssh</span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span> /Hexo</span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span> \</span><br><span class="line">    npm install hexo-cli -g \</span><br><span class="line">    &amp;&amp; hexo init . \</span><br><span class="line">    &amp;&amp; npm install \</span><br><span class="line">    &amp;&amp; npm install hexo-generator-sitemap --save \</span><br><span class="line">    &amp;&amp; npm install hexo-generator-feed --save \</span><br><span class="line">    &amp;&amp; npm install hexo-deployer-git --save \</span><br><span class="line">    &amp;&amp; npm uninstall hexo-renderer-marked --save \</span><br><span class="line">    &amp;&amp; npm install hexo-renderer-kramed --save</span><br><span class="line"></span><br><span class="line"><span class="keyword">VOLUME</span> ["/Hexo/source", "/Hexo/themes", "/root/.ssh"]</span><br><span class="line"></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">80</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span> docker-entrypoint.sh /docker-entrypoint.sh</span><br><span class="line"><span class="keyword">COPY</span> inline.js /Hexo/node_modules/kramed/lib/rules/inline.js</span><br><span class="line"></span><br><span class="line"><span class="keyword">ENTRYPOINT</span> ["/docker-entrypoint.sh"]</span><br><span class="line"></span><br><span class="line"><span class="keyword">CMD</span> ['/bin/bash']</span><br></pre></td></tr></table></figure>
+<h4 id="其中的-docker-entrypoint-sh-是"><a href="#其中的-docker-entrypoint-sh-是" class="headerlink" title="其中的 docker-entrypoint.sh 是"></a>其中的 docker-entrypoint.sh 是</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/sh</span><br><span class="line"></span><br><span class="line">echo "$@" | awk -F ' ' '&#123;print $1&#125;' | xargs git config --global user.name</span><br><span class="line"></span><br><span class="line">echo "$@" | awk -F ' ' '&#123;print $2&#125;' | xargs git config --global user.email</span><br><span class="line"></span><br><span class="line">if [ "$3" = 's' ] || [ "$3" = 'server' ]; then</span><br><span class="line">    set -- /usr/bin/hexo s -p 80</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if [ "$3" = 'd' ] || [ "$3" = 'deploy' ]; then</span><br><span class="line">    set -- /usr/bin/hexo cl &amp;&amp; /usr/bin/hexo d -g</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">exec "$@"</span><br></pre></td></tr></table></figure>
+<p><strong>记得要加可执行的权限</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> chmod +x docker-entrypoint.sh</span><br></pre></td></tr></table></figure>
+<h4 id="inline-js文件！"><a href="#inline-js文件！" class="headerlink" title="inline.js文件！"></a><strong>inline.js文件！</strong></h4><p>用于 Hexo 默认使用的 hexo-renderer-marked 引擎渲染网页，该引擎会把一些特殊的 markdown 符号转换为相应的 html 标签，比如在 markdown 语法中，下划线<code>_</code>代表斜体，会被渲染引擎处理为<code>&lt;em&gt;</code>标签。</p>
+<p>因为类 Latex 格式书写的数学公式下划线<code>_</code>表示下标，有特殊的含义，如果被强制转换为<code>&lt;em&gt;</code>标签，那么 MathJax 引擎在渲染数学公式的时候就会出错。</p>
+<p>类似的语义冲突的符号还包括<code>*</code>, <code>{</code>, <code>}</code>, <code>\\</code>等。</p>
+<p>解决方法：</p>
+<p>1.更换 hexo-renderer-kramed 引擎（见Dockerfile 17、18 行）</p>
+<p>2.修改 {你的博客目录}/node_modules/kramed/lib/rules/inline.js 文件</p>
+<p>修改第11行的 escape 变量的值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//escape: /^\\([\\`*&#123;&#125;\[\]()#$+\-.!_&gt;])/,</span></span><br><span class="line"><span class="built_in">escape</span>: <span class="regexp">/^\\([`*\[\]()#$+\-.!_&gt;])/</span>,</span><br></pre></td></tr></table></figure>
+<p>修改第20行的 em 变量的值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//em: /^\b_((?:__|[\s\S])+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,</span></span><br><span class="line">em: <span class="regexp">/^\*((?:\*\*|[\s\S])+?)\*(?!\*)/</span>,</span><br></pre></td></tr></table></figure>
+<p>具体的 <a href="https://github.com/Dhqquan/docker-hexo/blob/master/inline.js" target="_blank" rel="noopener">inline.js 文件</a></p>
+<h4 id="生成-Docker-Image"><a href="#生成-Docker-Image" class="headerlink" title="生成 Docker Image"></a>生成 Docker Image</h4><p>将<strong>Dockerfile</strong>、<strong>docker-entrypoint.sh</strong> 和 <strong>inline.js</strong> 放在同一个文件夹。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> docker build -t xxx/hexo .</span><br></pre></td></tr></table></figure>
+<p>xxx/hexo 是你定义的 Image 名称，注意别忘了后面的 <code>.</code></p>
+<h2 id="Docker-Hexo-Container"><a href="#Docker-Hexo-Container" class="headerlink" title="Docker-Hexo Container"></a>Docker-Hexo Container</h2><h3 id="hexo-server-Container"><a href="#hexo-server-Container" class="headerlink" title="hexo-server Container"></a>hexo-server Container</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> docker run -p 4000:80 --name hexo-server -d \</span><br><span class="line">-v &#123;你的博客文件夹路径&#125;/.ssh:/root/.ssh \</span><br><span class="line">-v &#123;你的博客文件夹路径&#125;/source:/Hexo/source \</span><br><span class="line">-v &#123;你的博客文件夹路径&#125;/themes:/Hexo/themes \</span><br><span class="line">-v &#123;你的博客文件夹路径&#125;/_config.yml:/Hexo/_config.yml \</span><br><span class="line">xxx/hexo &#123;你的 github username&#125; &#123;你的 github email&#125; server</span><br></pre></td></tr></table></figure>
+<p>注意：</p>
+<ul>
+<li>{ 你的博客文件夹路径 } 即你新建的文件目录 eg：/Hexo</li>
+<li>命令中的 xxx/hexo 即上一步的 Image 名称</li>
+<li>命令中的 -v 即挂载命令</li>
+</ul>
+<p>Kitematic 中可以看到 hexo-server container 正在运行，点击 exec 可以进入 container 控制台。</p>
+<h3 id="hexo-deploy-Container"><a href="#hexo-deploy-Container" class="headerlink" title="hexo-deploy Container"></a>hexo-deploy Container</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> docker run -p 4000:80 --name hexo-deploy -d \</span><br><span class="line">-v &#123;你的博客文件夹路径&#125;/.ssh:/root/.ssh \</span><br><span class="line">-v &#123;你的博客文件夹路径&#125;/source:/Hexo/source \</span><br><span class="line">-v &#123;你的博客文件夹路径&#125;/themes:/Hexo/themes \</span><br><span class="line">-v &#123;你的博客文件夹路径&#125;/_config.yml:/Hexo/_config.yml \</span><br><span class="line">xxx/hexo &#123;你的 github username&#125; &#123;你的 github email&#125; deploy</span><br></pre></td></tr></table></figure>
+<p>hexo-deploy 将你的博客部署到 Github 上。</p>
+<p>Github 地址：<a href="https://github.com/Dhqquan/docker-hexo" target="_blank" rel="noopener">https://github.com/Dhqquan/docker-hexo</a></p>
+<h2 id="本章参考"><a href="#本章参考" class="headerlink" title="本章参考"></a>本章参考</h2><ol>
+<li><a href="https://www.v2ex.com/t/281309" target="_blank" rel="noopener">接近于完美版的 docker-hexo 实现~</a></li>
+<li><a href="https://fedoryx.github.io/%E5%88%A9%E7%94%A8-GitHub-Hexo-Docker-%E5%BF%AB%E9%80%9F%E6%9E%84%E5%BB%BA%E7%8B%AC%E7%AB%8B%E5%8D%9A%E5%AE%A2-MAC%E7%AF%87/" target="_blank" rel="noopener">利用 GitHub + Hexo + Docker 快速构建独立博客 — MAC篇</a></li>
+<li><a href="https://blog.csdn.net/wgshun616/article/details/81019687" target="_blank" rel="noopener">Hexo 的 Next 主题中渲染 MathJax 数学公式</a></li>
+</ol>
+<h1 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h1><h2 id="Hexo-简介"><a href="#Hexo-简介" class="headerlink" title="Hexo 简介"></a>Hexo 简介</h2><blockquote>
+<p>快速、简介且高效的博客框架</p>
+<p>超快速度、支持 Markdown、一键部署、丰富插件</p>
+</blockquote>
+<h2 id="Hexo-搭建准备"><a href="#Hexo-搭建准备" class="headerlink" title="Hexo 搭建准备"></a>Hexo 搭建准备</h2><ul>
+<li>Node.js</li>
+<li>Git</li>
+</ul>
+<p>这里已经通过 Docker 解决了环境</p>
+<h2 id="Hexo配置文件"><a href="#Hexo配置文件" class="headerlink" title="Hexo配置文件"></a>Hexo配置文件</h2><ul>
+<li>_config.yml 站点配置文件</li>
+<li>themes 存放主题的文件夹</li>
+<li>source 博客资源文件夹</li>
+</ul>
+<p>这些文件是我们需要在电脑上准备的</p>
+<h2 id="Hexo-重要命令"><a href="#Hexo-重要命令" class="headerlink" title="Hexo 重要命令"></a>Hexo 重要命令</h2><p><strong>init</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> hexo init [folder]</span><br></pre></td></tr></table></figure>
+<p><strong>new</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> hexo new [layout] &lt;title&gt;</span><br></pre></td></tr></table></figure>
+<p>新建一篇文章。不过一般直接在 source 的 _post 下写</p>
+<p><strong>generate</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> hexo generate</span><br><span class="line"><span class="meta">$</span> hexo g</span><br></pre></td></tr></table></figure>
+<p>生成静态文件</p>
+<p><strong>server</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> hexo server</span><br><span class="line"><span class="meta">$</span> hexo s</span><br></pre></td></tr></table></figure>
+<p>启动 Hexo 服务器。默认情况下，访问网址是：<a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a></p>
+<p><strong>deploy</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> hexo deploy</span><br><span class="line"><span class="meta">$</span> hexo d</span><br></pre></td></tr></table></figure>
+<p>部署网址到 Github</p>
+<p><strong>clean</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> hexo clean</span><br></pre></td></tr></table></figure>
+<p>清除本地缓存</p>
+<h2 id="本章参考-1"><a href="#本章参考-1" class="headerlink" title="本章参考"></a>本章参考</h2><ol>
+<li><a href="https://hexo.io/zh-cn/index.html" target="_blank" rel="noopener">Hexo 官方文档 </a></li>
+</ol>
+<h1 id="后续使用"><a href="#后续使用" class="headerlink" title="后续使用"></a>后续使用</h1><h2 id="运行-Hexo-的初始版本"><a href="#运行-Hexo-的初始版本" class="headerlink" title="运行 Hexo 的初始版本"></a>运行 Hexo 的初始版本</h2>  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> docker run -p 80:80 -d dhq/hexo &#123;你的 Github username&#125; &#123;你的 Github Email&#125; server</span><br></pre></td></tr></table></figure>
+<h2 id="运行-Hexo-服务器，在本机查看效果"><a href="#运行-Hexo-服务器，在本机查看效果" class="headerlink" title="运行 Hexo 服务器，在本机查看效果"></a>运行 Hexo 服务器，在本机查看效果</h2>  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> docker start hexo-server</span><br><span class="line"><span class="meta">$</span> docker exec -it hexo-server sh</span><br></pre></td></tr></table></figure>
+<p>  就可以在 localhost:4000 查看具体的效果了。</p>
+<h2 id="部署上-Github"><a href="#部署上-Github" class="headerlink" title="部署上 Github"></a>部署上 Github</h2>  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> docker start hexo-deploy</span><br></pre></td></tr></table></figure>
+<h2 id="每一个写文章的话，就自己手动创建到-source-post-目录下，就可以了。"><a href="#每一个写文章的话，就自己手动创建到-source-post-目录下，就可以了。" class="headerlink" title="每一个写文章的话，就自己手动创建到 source/_post 目录下，就可以了。"></a>每一个写文章的话，就自己手动创建到 source/_post 目录下，就可以了。</h2>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/建站/" rel="tag"># 建站</a>
+          
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
+          
+            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/04/Hexo-中开启及修复渲染-MathJax-问题/" rel="prev" title="Hexo 中开启及修复渲染 MathJax 问题">
+                Hexo 中开启及修复渲染 MathJax 问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar2.JPG" alt="Dhq">
+            
+              <p class="site-author-name" itemprop="name">Dhq</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Dhqquan" title="GitHub &rarr; https://github.com/Dhqquan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:dhq@dhquan.cn" title="E-Mail &rarr; mailto:dhq@dhquan.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker"><span class="nav-number">1.</span> <span class="nav-text">Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker安装"><span class="nav-number">1.1.</span> <span class="nav-text">Docker安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-Homebrew-安装"><span class="nav-number">1.1.1.</span> <span class="nav-text">使用 Homebrew 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更多的安装方法：官方文档"><span class="nav-number">1.1.2.</span> <span class="nav-text">更多的安装方法：官方文档</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kitematic下载"><span class="nav-number">1.2.</span> <span class="nav-text">Kitematic下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-Hexo-Image"><span class="nav-number">1.3.</span> <span class="nav-text">Docker-Hexo Image</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-网上公开的-Image"><span class="nav-number">1.3.1.</span> <span class="nav-text">1. 网上公开的 Image</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-自己通过-DockerFile-构建-Image"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.自己通过 DockerFile 构建 Image</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#建立Dockerfile，具体Dockerfile的代码"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">建立Dockerfile，具体Dockerfile的代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其中的-docker-entrypoint-sh-是"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">其中的 docker-entrypoint.sh 是</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#inline-js文件！"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">inline.js文件！</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#生成-Docker-Image"><span class="nav-number">1.3.2.4.</span> <span class="nav-text">生成 Docker Image</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-Hexo-Container"><span class="nav-number">1.4.</span> <span class="nav-text">Docker-Hexo Container</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hexo-server-Container"><span class="nav-number">1.4.1.</span> <span class="nav-text">hexo-server Container</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hexo-deploy-Container"><span class="nav-number">1.4.2.</span> <span class="nav-text">hexo-deploy Container</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本章参考"><span class="nav-number">1.5.</span> <span class="nav-text">本章参考</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hexo"><span class="nav-number">2.</span> <span class="nav-text">Hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo-简介"><span class="nav-number">2.1.</span> <span class="nav-text">Hexo 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo-搭建准备"><span class="nav-number">2.2.</span> <span class="nav-text">Hexo 搭建准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo配置文件"><span class="nav-number">2.3.</span> <span class="nav-text">Hexo配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo-重要命令"><span class="nav-number">2.4.</span> <span class="nav-text">Hexo 重要命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本章参考-1"><span class="nav-number">2.5.</span> <span class="nav-text">本章参考</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#后续使用"><span class="nav-number">3.</span> <span class="nav-text">后续使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#运行-Hexo-的初始版本"><span class="nav-number">3.1.</span> <span class="nav-text">运行 Hexo 的初始版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行-Hexo-服务器，在本机查看效果"><span class="nav-number">3.2.</span> <span class="nav-text">运行 Hexo 服务器，在本机查看效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署上-Github"><span class="nav-number">3.3.</span> <span class="nav-text">部署上 Github</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#每一个写文章的话，就自己手动创建到-source-post-目录下，就可以了。"><span class="nav-number">3.4.</span> <span class="nav-text">每一个写文章的话，就自己手动创建到 source/_post 目录下，就可以了。</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Dhq</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+  
+  <script id="dsq-count-scr" src="https://blog-dhquan-cn.disqus.com/count.js" async></script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://blog.dhquan.cn/2019/02/02/Hexo-+-Docker-+-Github-搭建个人博客/";
+    this.page.identifier = "2019/02/02/Hexo-+-Docker-+-Github-搭建个人博客/";
+    this.page.title = 'Hexo + Docker + Github 搭建个人博客';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://blog-dhquan-cn.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    loadComments();
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow: auto hidden;
+}
+</style>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

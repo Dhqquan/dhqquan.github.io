@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Topical Word EmbeddingsYang Liu, Zhiyuan Liu, Tat-Seng Chua, µ Sun Abstract大多数的词嵌入模型通常使用单个向量来表示每一个单词，这使得这些模型在同音异义和一词多义上无法区分。为了增强辨别力，我们采用潜在主题模型（latent topic model）为语料库里的每一个词分配主题，并且基于词和主题来学习主题词嵌入（TWE）。这">
+<meta name="keywords" content="翻译,论文,Word Embeddings">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【论文翻译】Topical Word Embeddings">
+<meta property="og:url" content="http://blog.dhquan.cn/2019/02/12/【论文翻译】Topical-Word-Embeddings/index.html">
+<meta property="og:site_name" content="Dhq&#39;s Blog">
+<meta property="og:description" content="Topical Word EmbeddingsYang Liu, Zhiyuan Liu, Tat-Seng Chua, µ Sun Abstract大多数的词嵌入模型通常使用单个向量来表示每一个单词，这使得这些模型在同音异义和一词多义上无法区分。为了增强辨别力，我们采用潜在主题模型（latent topic model）为语料库里的每一个词分配主题，并且基于词和主题来学习主题词嵌入（TWE）。这">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-02-19T13:16:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【论文翻译】Topical Word Embeddings">
+<meta name="twitter:description" content="Topical Word EmbeddingsYang Liu, Zhiyuan Liu, Tat-Seng Chua, µ Sun Abstract大多数的词嵌入模型通常使用单个向量来表示每一个单词，这使得这些模型在同音异义和一词多义上无法区分。为了增强辨别力，我们采用潜在主题模型（latent topic model）为语料库里的每一个词分配主题，并且基于词和主题来学习主题词嵌入（TWE）。这">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Dhq's Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://blog.dhquan.cn/2019/02/12/【论文翻译】Topical-Word-Embeddings/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【论文翻译】Topical Word Embeddings | Dhq's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Dhq's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>日程表</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.dhquan.cn/2019/02/12/【论文翻译】Topical-Word-Embeddings/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Dhq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar2.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dhq's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【论文翻译】Topical Word Embeddings
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-12 14:53:57" itemprop="dateCreated datePublished" datetime="2019-02-12T14:53:57+00:00">2019-02-12</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-19 13:16:27" itemprop="dateModified" datetime="2019-02-19T13:16:27+00:00">2019-02-19</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/论文翻译/" itemprop="url" rel="index"><span itemprop="name">论文翻译</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <a href="/2019/02/12/【论文翻译】Topical-Word-Embeddings/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/02/12/【论文翻译】Topical-Word-Embeddings/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Topical-Word-Embeddings"><a href="#Topical-Word-Embeddings" class="headerlink" title="Topical Word Embeddings"></a>Topical Word Embeddings</h2><p>Yang Liu, Zhiyuan Liu, Tat-Seng Chua, µ Sun</p>
+<h3 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h3><p>大多数的词嵌入模型通常使用单个向量来表示每一个单词，这使得这些模型在同音异义和一词多义上无法区分。为了增强辨别力，我们采用潜在主题模型（latent topic model）为语料库里的每一个词分配主题，并且基于词和主题来学习<strong>主题词嵌入（TWE）</strong>。这样能够灵活地获得语境词嵌入（contextual word embedding），来衡量语境中词的相似性。我们还可以构建文档向量表示（document representation），相比广泛使用的文档模型（如潜主题模型）更具表现力。在实验中，我们评估了 TWE 模型的两个任务：情景词相似性和文本分类。实验结果表明，我们的模型比经典的词嵌模型（包括基于语境相似度多种原型版本）表现好，同时在文本分类上超过了潜在主题模型和其他代表性的文档模型。本文的源代码能够在<a href="https://github.com/largelymfs/topical_word_embeddings" target="_blank" rel="noopener">https://github.com/largelymfs/topical_word_embeddings</a>。</p>
+<a id="more"></a>
+<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>词嵌入（word embedding）也被成为词表示（word representation），在基于语料库的上下文构建连续词向量中起着越来越重要的角色。词嵌入既能捕捉单词的语义和句法信息，又能用来测量词的相似性，因此词嵌入广泛应用于IR和NLP任务中。</p>
+<p>大多数的词嵌入方法都是假定每一个词维护单个向量，但是无法解决一词多义和同音异义。多原型向量空间模型（Reisinger and Mooney 2010）提出将一个单词的上下文聚类成不同的群（group），然后每一个群生成不同的原型向量。遵循着这个想法，（Huang et al. 2012）提出了基于神经语言模型（Bengio et al. 2003）的多原型词嵌入。</p>
+<p>尽管他们的模型游泳，但是多原型词嵌入面临以下几个挑战：(1) 这些模型为每一个词生成孤立的多原型向量，忽视了词之间复杂的相关性和和它们的上下文。(2) 在多原型设置中，一个单词的上下文被分成了没有重叠的群。而实际上，一个词的多个意思可能是互相关联的，它们之间没有明确的语义边界。</p>
+<p>在这篇论文中，我们提出了一个更灵活、更强有力的多原型词嵌入框架——<strong>主题词嵌入（ TWE ）</strong>，其中<strong>主题词</strong>是指上下文主题的词。TWE 的基本思想是，我们允许每一个词在不同的主题下拥有不用的嵌入向量。例如，<em>苹果</em> 这个词，在 <em>食物</em> 的主题下代表是一种水果，在 <em>IT</em> 主题下代表一个 IT 公司。</p>
+<p>我们使用 latent Dirichlet allocation ( LDA ) (Blei, Ng, and Jordan 2003 ) 来获得词主题。使用 collapsed Gibbs sampling ( Griffiths and Steyvers 2004 ) 来迭代地为每一个单词标记（ word token ）分配潜在的主题。 通过这个方法，给出一系列的单词 $D = \{ w_1, …, w_M \}$，经过 LDA 收敛，每一个单词标记 $w_i$ 会分配进一个具体的主题 $z_i$， 组成一个<strong>词-主题</strong>对 $\langle w_i, z_i \rangle$，用来学习主题词嵌入。我们设计了三种 TWE 模型来学习主题词向量，如 图1 所示，其中窗口大小是 1，$w_{i-1}$ 和 $w_{i+1}$ 是词 $w_i$ 的上下文。</p>
+<p><strong>TWE-1</strong>. 我们将每一个主题视为一个伪词（pseudo word），分别学习主题向量和词向量。然后我们根据向量 $w_i$ 和 $z_i$  建立主题词向量 $\langle w_i, z_i \rangle$ 。</p>
+<p><strong>TWE-2</strong>. 我们将每一个词-主题对 $\langle w_i, z_i \rangle$ 视为一个伪词，直接地学习主题词向量。</p>
+<p><strong>TWE-3</strong>. 我们为每一个词和每一个主题保留不同嵌入向量。 通过将相关的词和主题嵌入向量联系起来，建立词-主题对的嵌入向量。</p>
+<p>在三种 TWE 模型中，TWE-1 没有考虑词和它指定学习的主题之间的相互联系。TWE-2 通过简单地将词-主题对视为伪词，考虑了内在的联系，但是它存在稀疏性问题，因为每一个出现的词语都被严格地分配到不同的主题。相比于 TWE-2，TWE-3 则是在鉴别单词和稀疏性之间进行了权衡。但是在 TWE-3 学习过程中，主题嵌入向量会影响对应的单词嵌入向量，这可能导致这些词汇在相同的主题中不易辨别。</p>
+<p>为了实现我们的 TWE 模型，我们使用了目前最好的词嵌入模型——SkipGram（Mikolov et al. 2013）。下一部分会详细的介绍三种 TWE 模型。 TWE 模型能够被用来计算给定上下文的语境词嵌入，并且能够用来表示一个从所有词的主题词嵌入聚合成为的文档。</p>
+<p>我们在两个任务上测试了我们提出的模型，语境词相似和文本分类来测试我们的模型。实验结果表明，我们的模型比传统的和其他多原型词嵌入模型在语境词相似表现好，而且在文本分类上超过了广泛使用的基于主题和基于词嵌入的文档模型。</p>
+<p>主要的贡献是我们将主题融入到基本的词嵌入表示中，并允许产生的主题词嵌入在不同的语境下获得一个词的不同含义。相比于多原型词嵌入模型分别为每一个词建立多原型嵌入，我们的模型利用主题模型去利用全部词和它们的上下文一起学习主题词向量。</p>
+<h3 id="Our-Models"><a href="#Our-Models" class="headerlink" title="Our Models"></a>Our Models</h3><h4 id="Skip-Gram"><a href="#Skip-Gram" class="headerlink" title="Skip-Gram"></a>Skip-Gram</h4><p>Skip-Gram 是一个众所周知的学习词向量的框架（Mikkolov et al. 2013），如图1(A) 所示。Skip-Gram 目的是预测滑动窗口中给定目标单词的上下文单词。在这个框架中，每一个单词对应一个独一无二的向量，目标词的向量用来作为预测上下文单词的特征。</p>
+<p>给定一个词序列 $D =  \{w_1,…, w_M\}$ ，Skip-Gram 的目标是最大化平均对数概率</p>
+<script type="math/tex; mode=display">
+\mathcal{L}(D) = \frac{1}{M}\sum_{i=1}^{M}\sum_{-k\leq c\leq k, c\neq 0}logPr(w_{i+c}|wi)。\tag{1}</script><p>$k$ 是目标单词的上下文大小。 Skip-Gram 使用 softmax 函数计算 $Pr(w_c|wi)$:</p>
+<script type="math/tex; mode=display">
+Pr(w_c|w_i) = \frac{exp(\textbf{w}_c\cdot \textbf{w}_i)}{\sum_{w_i\in W}exp(\textbf{w}_c\cdot \textbf{w}_i)},\tag{2}</script><p>$\textbf{w}_i$ 和 $\textbf{w}_c$ 分别表示目标单词 $w_i$ 和 上下文单词 $w_c$ 向量表示。$W$ 是单词词汇表。为了是模型更加高效的学习，我们使用了<strong>分层 softmax</strong> 和<strong>负采样</strong>技术。</p>
+<p>通过 Skip-Gram 学习到的词向量可以用来计算词语的相似度。两个词与 $w_i​$ 和 $w_j​$ 的相似度可以用他们之间的向量内积度量 $S(w_i, w_j) = \textbf{w}_i \cdot \textbf{w}_j​$。在之前的工作中，单词相似度任务通常被用于评估词向量方法的表现（Mikolov et al. 2013; Baroni, Dinu, and Kruszewski 2014）。</p>
+<p>正如 Introduction 部分所说的那要，我们希望通过引入潜在主题模型来提高词嵌入的表达能力。在 latent Dirichlet allocation(LDA) 作用下，根据概率 $Pr(z_i|w_i, d) \propto Pr(w_i|z_i)Pr(z_i|d)​$，我们为每一个词 $w_i​$ 分配了一个潜在主题 $z_i \in T​$。然后我们提出了三种主题词嵌入（TWE）。</p>
+<h4 id="TWE-1"><a href="#TWE-1" class="headerlink" title="TWE-1"></a>TWE-1</h4><p>TWE-1 目标是分别同时地学习单词和主题的向量表达。对于每一个目标单词以及它的主题 $\langle w_i, z_i\rangle$， TWE-1 的目标是最大化平均对数概率：</p>
+<script type="math/tex; mode=display">
+\mathcal{L}(D)=\frac{1}{M}\sum_{i=1}^{M}\sum_{-k\leq c\leq k,c\neq 0}logPr(w_{i+c}|w_i)+logPr(w_{i+c}|z_i).\tag{3}</script><p>相比于在 Skip-Gram 仅仅使用目标单词 $w_i​$ 来预上下文，TWE-1 还使用了目标单词的主题 $z_i​$ 来预测上下文。TWE-1 的基本方法是将每一个主题视为一个伪词，这个伪词出现在所有分配了这个主题的单词的位置上面。因此，主题的向量将表示这个主题下单词的集体的语义。</p>
+<p>在 TWE-1 中，通过连接单词 $w$ 和主题 $z$ 获得了这个主题下的主题词嵌入，例如 $\textbf{w}^z=\textbf{w} \oplus \textbf{z}$，其中 $\oplus$ 是连接运算符，而且 $\textbf{w}^z$ 的长度是 $\textbf{w}$ 或 $\textbf{z}$ 的两倍。</p>
+<h5 id="Contextual-Word-Embedding"><a href="#Contextual-Word-Embedding" class="headerlink" title="Contextual Word Embedding"></a>Contextual Word Embedding</h5><p>TWE-1 能够用来获得上下文的词嵌入。对于每一个词 $w$ 和它的上下文 $c$，TWE-1 首先通过将 $c $ 作为文档推断出主题贡献 $Pr(z|w,c)$，称为 $Pr(z|w,c) \propto Pr(w|z)Pr(z|c)$。通过主题分布，我们可以进一步的在 $c$ 主题 $w$ 词获得上下文词嵌入</p>
+<script type="math/tex; mode=display">
+\textbf{w}^c=\sum_{z\in T}Pr(z|w,c)\textbf{w}^z,\tag{4}</script><p>$\textbf{w}^z$ 是 $c$ 主题下词 $w$ 的词嵌入，通过连接词向量 $\textbf{w}$ 和主题向量 $\textbf{z}$ 。</p>
+<p>情景词嵌入将会哦用于计算上下文的单词相似度。给定一个词对和它们的上下文，即 $(w_i,c_i)$ 和 $(w_j, c_j)$，情景词的目的是计算这两个词{的相似性，可以表示为 $S(w_i,c_i,w_j,c_j)=(\textbf{w}_{i}^{c_i}\cdot \textbf{w}_{j}^{c_j})$，还可以表示为</p>
+<script type="math/tex; mode=display">
+\sum_{z\in T}\sum_{z'\in T}Pr(z|w_i,c_i)Pr(z'|w_j,c_j)S(\textbf{w}^z,\textbf{w}^{z'}),\tag{5}</script><p>$S(\textbf{w}^z,\textbf{w}^{z’})​$ 是 $\textbf{w}^{z}​$ 和 $\textbf{w}^{z’}​$ 的相关性，本文使用 <strong>cos</strong> 相似度来计算。Eq.(5) 中的相似函数称为 AvgSimC（Reisinger and Mooney 2010）。</p>
+<p>我们定义 MaxSimC (Reisinger and Mooney 2010) 作为 AvgSimC的代替。MaxSimC 选择最有可能的主题 $z$ 对应的主题词嵌入 $\textbf{w}^z$ ，推断在上下文 $c$ 中使用 $w$ 作为情景词嵌入。我们定义了 $w$ 词在上下文 $c$ 情景词嵌入</p>
+<script type="math/tex; mode=display">
+\textbf{w}^c=\textbf{w}^z, z=argmax_zPr(z|w,c),\tag{6}</script><p>上下文词相似定义为</p>
+<script type="math/tex; mode=display">
+S(w_i,c_i,w_j,c_j)=\textbf{w}_i^{z}\cdot \textbf{w}_j^{z'},\tag{7}</script><p>其中$z=argmax_zPr(z|w_i,c_i), z’=argmax_zPr(z|w_j,c_j)​$ .</p>
+<h5 id="Document-Embedding"><a href="#Document-Embedding" class="headerlink" title="Document Embedding"></a>Document Embedding</h5><p>在 TWE-1 中，我们通过聚积每个词的主题词嵌入来表示语义字，例如：$\textbf{d}=\sum_{w\in d}Pr(w|d)\textbf{w}^z​$，其中 $Pr(w|d)​$ 能够加权 TFIDF 分数在 $d​$ 中。</p>
+<h4 id="TWE-2"><a href="#TWE-2" class="headerlink" title="TWE-2"></a>TWE-2</h4><p>主题模型将单词根据它们的语义意思分成许多主题组。换句话说，一个词在不同的主题组对应着不同意思。因为大多数的词有多个意思，同时这些意思应该有在语义空间中有能够区别的向量。</p>
+<p>因此，在 TWE-2 中我们考虑每一个词-主题对 $\langle w,z\rangle​$ 为伪词，并学习唯一的向量 $\mathbf{w}^z​$。 TWE-2 的目标是最大平均对数概率</p>
+<script type="math/tex; mode=display">
+\mathcal{L}(D)=\frac{1}{M}\sum_{i=1}^M\sum_{-k\leq c\leq k,c\neq0}logPr(\langle w_{i+c},z_{i+c}\rangle|\langle w_i,z_i\rangle),\tag{8}</script><p>其中 $Pr(\langle w_c, z_c\rangle|\langle w_i, z_i\rangle)$ 同样是 softmax 函数</p>
+<script type="math/tex; mode=display">
+Pr(\langle w_c, z_c\rangle|\langle w_i, z_i\rangle)=\frac{exp(\mathbf{w}_c^{z_c}\cdot\mathbf{w}_i^{z_i})}{\sum_{\langle w_c,z_c\rangle\in\langle W,T\rangle}exp(\mathbf{w}_c^{z_c}\cdot\mathbf{w}_i^{z_i})}.\tag{9}</script><p>通过这个方式，TWE-2 自然地将一个单词 $w​$ 分成 $T​$ 部分，其中 $\mathbf{w} = \sum_{z\in T}Pr(z|w)\mathbf{w}_z​$ 其中 $Pr(z|w)​$ 能够从 LDA 中得到。</p>
+<p>在 TWE-2 中，我们通过 Eq.(4) 获得了一个单词的上下文词嵌入，可以用来进一步计算上下文单词相似度。对于文档嵌入向量，我们用 TWE-1 中相同的思路，通过 $\mathbf{d}=\sum_{\langle w, z\rangle\in d}Pr(\langle w, z\rangle|d)\mathbf{w}^z$ 获得文档嵌入向量</p>
+<h4 id="TWE-3"><a href="#TWE-3" class="headerlink" title="TWE-3"></a>TWE-3</h4><p>自从 TWE-2 将每一个词分成不同的主题，相比于 Skip-Gram学习词嵌入任然有稀疏的问题。为了解决这个问题，我们提出了 TWE-3 模型来平衡单词鉴别力和稀疏。</p>
+<p>和 TWE-1 类似，TWE-3 拥有词和主题的向量。对于每一个词-主题对 $\langle w,z\rangle$，TWE-3 将向量 $\mathbf{w}$ 和向量 $\mathbf{z}$ 连接建立向量 $\mathbf{w}^z$，其中$\lvert \mathbf{w}^z\rvert=\lvert \mathbf{w}\rvert + \lvert \mathbf{z}\rvert$。词向量长度 $\lvert \mathbf{w}\rvert$ 不需要和主题向量长度 $\vert \mathbf{z}\rvert$ 相等。</p>
+<p>TWE-3 的目标和 TWE-2 的目标是相同的，是 Eq.(8)。 概率 $Pr(\langle w_c, z_c\rangle|\langle w_i, c_i\rangle)$ 与 Eq.(9) 中的相同。在 TWE-3 中，每个词嵌入 $\mathbf{w}$ 和主题嵌入 $\mathbf{z}$ 的参数在词-主题对 $\langle w, z\rangle$ 上共享；然而在 TWE-2中每个词-主题对 $\langle w, z\rangle$ 都有它们自己的参数。因此在 TWE-2 中词-主题对 $\langle w, z\rangle$ 和 $\langle w, z’\rangle$ 有着不同的参数，但是在 TWE-3 中它们共享了同一个单词嵌入 $\mathbf{w}$。</p>
+<p>在 TWE-3 中，构建情景词嵌入和文档嵌入和 TWE-1中的一样。</p>
+<h4 id="Optimization-and-Parameter-Estimation"><a href="#Optimization-and-Parameter-Estimation" class="headerlink" title="Optimization and Parameter Estimation"></a>Optimization and Parameter Estimation</h4><p>在学习 TWE 模型的过程中我们使用与 Skip-Gram (Mikolov et al. 2013) 中一样的优化方法。即使用随机梯度下降 (SGD) 进行优化，使用反向传播算法计算梯度。</p>
+<p>在学习 TWE 模型中初始化十分重要。在 TWE-1 中，我们先从 Skip-Gram 中学习单词嵌入，然后我们用分配给这个主题的所有单词的平均值来初始化每个主题向量，同时在考试单词嵌入不变的情况下学习主题嵌入。在 TWE-2 中，我们用 Skip-Gram 中的相关的词向量初始化每个词-主题对，然后学习 TWE 模型。在 TWE-3 中，我们使用 Skip-Gram 初始化词向量，使用 TWE-1 中的主题向量，然后学习 TWE 模型。</p>
+<h4 id="Complexity-Analysis"><a href="#Complexity-Analysis" class="headerlink" title="Complexity Analysis"></a>Complexity Analysis</h4><p>表 1 展示了多个模型的复杂度，包括模型参数的数量、计算复杂度。在这个表中，主题的数量是 $T$，词汇表的大小是 $W$， 窗口大小是 $C$， 语料库的大小是 $M$，词向量和主题向量的长度分别是 $K_W$ 和 $K_T$。在 Skip-Gram，TWE-1 和 TWE-2 中 $K_W=K_T=K$。我们没有计算主题模型的参数计算到 TWE 中，这些参数大约是 $O(WT)​$。</p>
+<center>Table 1: Model complexities.</center>
+
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">模型</th>
+<th style="text-align:center">模型参数</th>
+<th style="text-align:center">计算复杂度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Skip-Gram</td>
+<td style="text-align:center">$WK$</td>
+<td style="text-align:center">$CM(1+logW)$</td>
+</tr>
+<tr>
+<td style="text-align:center">TWE-1</td>
+<td style="text-align:center">$(W+T)K$</td>
+<td style="text-align:center">$IM+2CM(1+logW)$</td>
+</tr>
+<tr>
+<td style="text-align:center">TWE-2</td>
+<td style="text-align:center">$WTK$</td>
+<td style="text-align:center">$IM+CM(1+logWT)$</td>
+</tr>
+<tr>
+<td style="text-align:center">TWE-3</td>
+<td style="text-align:center">$WK_W+TK_T$</td>
+<td style="text-align:center">$IM+CM(1+logWT)$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>在计算复杂度上，$O(ID)$ 表示学习主题模型是的计算复杂度，其中 $I$ 表示迭代次数，第二项表示利用分层 softmax 学习主题嵌入的计算复杂度。</p>
+<p>从复杂度分析我们可以知道，相比于 Skip-Gram，TWE 模型需要更多的参数来记录来为词嵌入提升鉴别力，但是计算复杂度缺没有上升，特别是在主题模型有更多的快速算法可用时。</p>
+<h3 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h3><p>在这一部分，我们通过两个任务来评估相关的模型，包括上下文单词相似度和文本分类，</p>
+<h4 id="Contextual-Word-Similarity"><a href="#Contextual-Word-Similarity" class="headerlink" title="Contextual Word Similarity"></a>Contextual Word Similarity</h4><p>评估词嵌入的传统任务是忽视上下文信息计算词相似度，使用标准数据集如WordSim353（Finkelstein et al. 2001）。但是大多数单词的语义高度依赖语境。因此我们使用上下文词相似度来考察主题词嵌入的有效性。</p>
+<h5 id="Datasets-and-Experiment-Setting"><a href="#Datasets-and-Experiment-Setting" class="headerlink" title="Datasets and Experiment Setting"></a>Datasets and Experiment Setting</h5><p>我们使用了（Huang et al. 2012）发布的数据集 SCWS 来评估。在 SCWS 中有 2003 对词语和包含这些词语的句子；还有人类给出的基于上下文的词语相似分数。我们对比了模型和人类判断分数的斯皮尔曼相关系数。对于 TWE 模型来说，两个词之间的相似度使用 Eq.(5) 计算。</p>
+<p>我们选择了最大的在线知识库——维基百科来学习主题词嵌入，我们采用了2010年4月的版本（Huang et al. 2012）。当使用 LDA 学习主题时，设置 $T=400$ 和 $I = 50$。在学习 Skip-Gram 和 TWE 模型时，我们这是了窗口大小为 5，词嵌入和主题嵌入的维度都是 $K = 400$。对于 TWE-1 和 TWE-3 来说，我们通过连接相应的词嵌入和主题嵌入，获得了主题词嵌入；对于 TWE-2 来说，主题词嵌入是现成的。</p>
+<p>在实验中，我们将我们的模型和下面几种基准模型进行了对比</p>
+<ul>
+<li><strong>C&amp;W 模型</strong>（Collobert and Weston 2008）：使用（Collobert and Weston 2008）提出的词嵌入，忽略上下文信息。</li>
+<li><strong>TFIDF</strong> 包括 pruned TF IDF 和 pruned TF IDF-M（Reiginger and Mooney 2010）：使用 TFIDF 加权的窗口为 10 的上下文来表示一个单词。精简的 TF IDF 通过减少分数低的上下文来提高性能。 </li>
+<li><strong>Huang的模型</strong>（Huang et al. 2012）：通过移除词向量中除了 top 200 单词意外的单词来精简。</li>
+<li><strong>Tian的模型</strong>（Tian et al. 2014）：提出了学习多原型词嵌入的概率模型，相比于 Huang 的模型，其性能相差不大，但是效率更高。</li>
+<li><strong>LDA</strong>：我们有两种计算上下文相似度的方法。<strong>LDA-S</strong> 忽略上下文，使用每一个单词的主题分布来 $Pr(z|w) \propto Pr(w|z) Pr(z)$ 表示单词，其中的 $Pr(w|z)$ 和 $Pr(z)$ 可以从 LDA 模型中获得。<strong>LDA-C</strong> 模型将单词 $w$ 的上下文句子 $c$ 视为一个文档，使用上下文主题分布 $Pr(z|w,c)$ 来表示单词，并且计算单词相似度。很明显的 LDA-S 忽视上下文，而 LDA-C 是上下文敏感的。 </li>
+<li><strong>Skip-Gram</strong>：忽略上下文，使用词向量来计算相似度，维度 $K = 400$。</li>
+</ul>
+<p>在这些基准模型中，C&amp;W、TFIDF、Pruned TFIDF、LDA-S、LDA-C 和 Skip-Gram 是单原型模型，而 TFIDF-M、Huang 和 Tian 是多原型模型。 </p>
+<h5 id="Evaluation-Result"><a href="#Evaluation-Result" class="headerlink" title="Evaluation Result"></a>Evaluation Result</h5><p>在表2中，我们展示了在 SCWS 数据集上的各个模型的评估结果。对于所有的多原型模型和 TWE 模型我们使用了 AvgSimC 和 MaxSimC 来评估结果。结果如下表</p>
+<p>Table 2： SCWS 数据集上下文相似性的斯皮尔曼相关系数 $\rho \times 100​$。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Model</th>
+<th style="text-align:center">$\rho \times 100$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$\text{C&amp;W}$</td>
+<td style="text-align:center">$\text{57.0}$</td>
+</tr>
+<tr>
+<td style="text-align:center">$\text{TFIDF}$</td>
+<td style="text-align:center">$\text{26.3}$</td>
+</tr>
+<tr>
+<td style="text-align:center">$\text{Pruned TFIDF}$</td>
+<td style="text-align:center">$\text{62.5}$</td>
+</tr>
+<tr>
+<td style="text-align:center">$\text{LDA-S}$</td>
+<td style="text-align:center">$\text{56.9}$</td>
+</tr>
+<tr>
+<td style="text-align:center">$\text{LDA-C}$</td>
+<td style="text-align:center">$\text{50.4}$</td>
+</tr>
+<tr>
+<td style="text-align:center">$\text{Skip-Gram}$</td>
+<td style="text-align:center">$\text{65.7}$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">AvgSimC</th>
+<th style="text-align:center">MaxSimC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$\text{Pruned TFIDF-M}$</td>
+<td style="text-align:center">$\text{60.5}$</td>
+<td style="text-align:center">$\text{60.4}$</td>
+</tr>
+<tr>
+<td style="text-align:center">$\text{Tian}$</td>
+<td style="text-align:center">$\text{65.4}$</td>
+<td style="text-align:center">$\text{63.6}$</td>
+</tr>
+<tr>
+<td style="text-align:center">$\text{Huang}$</td>
+<td style="text-align:center">$\text{65.3}$</td>
+<td style="text-align:center">$\text{58.6}$</td>
+</tr>
+<tr>
+<td style="text-align:center">$\text{TWE-1}$</td>
+<td style="text-align:center">$\textbf{68.1}$</td>
+<td style="text-align:center">$\textbf{67.3}$</td>
+</tr>
+<tr>
+<td style="text-align:center">$\text{TWE-2}$</td>
+<td style="text-align:center">$\text{67.9}$</td>
+<td style="text-align:center">$\text{63.6}$</td>
+</tr>
+<tr>
+<td style="text-align:center">$\text{TWE-3}$</td>
+<td style="text-align:center">$\text{67.1}$</td>
+<td style="text-align:center">$\text{65.5}$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>TWE 模型表现优于所有其他模型，其中 TWE-1 模型的表现最好。这表明 TWE 模型能够有效的利用潜在话题模型进行话题词嵌入。</p>
+<p>对于多原型模型，TWE 模型在计算 MaxSimC 上比其他模型都要好。通过选择最有可能的主题词嵌入，使得TWE模型能够更加准确地表达上下文的语义。这表明 TWE 模型相比于其他多原型模型具有以下两个优点：</p>
+<ol>
+<li>在大多数多原型模型，每一个单词通常只有有限个原型（在 Huang 的模型中是 10 个）。TWE 模型通过利用潜在的主题模型，在主题空间（通常是数百个维度）中区分单词语义。</li>
+<li>大多数多原型模型分别对每个单词建立多个原型，忽略了单词和它的上下文之间的联系。采用主题模型之后，我们能够通过一起考虑词和上下文来区分单词语义。使用主题模型还提供更多原则方式来选择出基于具体的上下文的最合适的主题词嵌入。</li>
+</ol>
+<p>TWE 三种模型分别反应了它们各自的特点：</p>
+<ol>
+<li>使用 AvgSimC 时，TWE-2 和 TWE-1 相当，当使用 MaxSimC 时 TWE-2 的效果比较差。我们猜测原因是当使用 MaxSimC 时，TWE-2 学习不同的词-主题嵌入导致了稀疏性问题。</li>
+<li>TWE-2 的性能在 TWE-1 和 TWE-3 之间。原因是在 TWE-3 的学习过程中，主题嵌入会影响词嵌入，单只主题词嵌入在下一个主题下的区分性比较小。</li>
+</ol>
+<h4 id="Text-Classification"><a href="#Text-Classification" class="headerlink" title="Text Classification"></a>Text Classification</h4><p>我们使用文本分类进行文本建模从而考察 TWE 模型的效果。</p>
+<h5 id="Datasets-and-Experiment-Setting-1"><a href="#Datasets-and-Experiment-Setting-1" class="headerlink" title="Datasets and Experiment Setting"></a>Datasets and Experiment Setting</h5><p>多类文本分类在 NLP 和 IR 中是一个很好研究的问题。在本文中，我们在数据集 20NewsGroup 上进行实验。20NewsGroup 包括了 20 个不同的新闻组一共 20,000 文档。我们记录了宏观平均 precision、recall 和 F-measure 进行比较。</p>
+<p>对于 TWE 模型，我们在训练集使用 LDA 来学习主题模型，设置主题的数量为 $T = 80$。我们进一步地在训练集学习了主题词嵌入，然后为训练集和测试集生成文档嵌入。接下来，我们将文档嵌入向量当做文档特征，使用 Liblinear（Fan et al. 2008）训练线性分类器。我们将词嵌入和主题嵌入的维度设定为 $K = 400$。</p>
+<p>我们考虑了一下几种基准：词袋（BOW）模型，LDA，Skip-Gram 和 Paragraph Vector（PV）模型（Le and  Mikolov 2014）。</p>
+<ul>
+<li>其中 BOW 模型将每个文档表示为一个词袋，并使用 TFIDF 值作为权重，对于 TFIDF，我们选择前 50,000 分值的词作为特征。</li>
+<li>LDA 将每个文档表示为其潜在的主题分布，我们使用 TWE 中的 LDA 模型。</li>
+<li>在 Skip-Gram 模型中农，我们通过文档内所有的词嵌入向量的平均值来构建文档的嵌入向量，维度是 $K = 400$。</li>
+<li>Paragraph Vector 模型是最近提出的文档嵌入模型，它包括分布式内存模型（PV-DM）和分布式词袋模型（PV-DBOW）。PV模型实现了目前最好的情感分类功能（Le and Mikolov 2014），但是还没有公布源码，doc2vec 提供了在线接口。在实验中我们发现其性能在比我们差，因此只展示结果以作对比。</li>
+</ul>
+<h5 id="Evaluation-Result-1"><a href="#Evaluation-Result-1" class="headerlink" title="Evaluation Result"></a>Evaluation Result</h5><p>表 3 展示在数据集 20NewsGroup 上进行文本分类的结果评估。我们可以发现 TWE-1 表现最好，特别是在主题模型和嵌入模型上。这说明了我们的模型能够更精准地捕捉文档的语义信息。而且相比于 BOW 模型，TWE 模型在这种情况下能够将文档特征降低 99.2%。</p>
+<center>Table 3: 多类文本分类的评估结果</center>
+
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Model</th>
+<th style="text-align:center">Accuracy</th>
+<th style="text-align:center">Precision</th>
+<th style="text-align:center">Recall</th>
+<th style="text-align:center">F-measure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$\text{BOW}$</td>
+<td style="text-align:center">$\text{79.7}$</td>
+<td style="text-align:center">$\text{79.5}$</td>
+<td style="text-align:center">$\text{79.0}$</td>
+<td style="text-align:center">$\text{79.0}$</td>
+</tr>
+<tr>
+<td style="text-align:center">$\text{LDA}$</td>
+<td style="text-align:center">$\text{72.2}$</td>
+<td style="text-align:center">$\text{70.8}$</td>
+<td style="text-align:center">$\text{70.7}$</td>
+<td style="text-align:center">$\text{70.0}$</td>
+</tr>
+<tr>
+<td style="text-align:center">$\text{Skip-Gram}$</td>
+<td style="text-align:center">$\text{75.4}$</td>
+<td style="text-align:center">$\text{75.1}$</td>
+<td style="text-align:center">$\text{74.3}$</td>
+<td style="text-align:center">$\text{74.2}$</td>
+</tr>
+<tr>
+<td style="text-align:center">$\text{PV-DM}$</td>
+<td style="text-align:center">$\text{72.4}$</td>
+<td style="text-align:center">$\text{72.1}$</td>
+<td style="text-align:center">$\text{71.5}$</td>
+<td style="text-align:center">$\text{71.5}$</td>
+</tr>
+<tr>
+<td style="text-align:center">$\text{PV-DBOW}$</td>
+<td style="text-align:center">$\text{75.4}$</td>
+<td style="text-align:center">$\text{74.9}$</td>
+<td style="text-align:center">$\text{74.3}$</td>
+<td style="text-align:center">$\text{74.3}$</td>
+</tr>
+<tr>
+<td style="text-align:center">$\text{TWE-1}$</td>
+<td style="text-align:center">$\textbf{81.5}$</td>
+<td style="text-align:center">$\textbf{81.2}$</td>
+<td style="text-align:center">$\textbf{80.6}$</td>
+<td style="text-align:center">$\textbf{80.6}$</td>
+</tr>
+<tr>
+<td style="text-align:center">$\text{TWE-2}$</td>
+<td style="text-align:center">$\text{79.0}$</td>
+<td style="text-align:center">$\text{78.6}$</td>
+<td style="text-align:center">$\text{77.9}$</td>
+<td style="text-align:center">$\text{77.9}$</td>
+</tr>
+<tr>
+<td style="text-align:center">$\text{TWE-3}$</td>
+<td style="text-align:center">$\text{77.4}$</td>
+<td style="text-align:center">$\text{77.2}$</td>
+<td style="text-align:center">$\text{76.2}$</td>
+<td style="text-align:center">$\text{76.1}$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>在三种 TWE 模型中，最简单的 TWE-1 模型获得了最好的性能。TWE-1 中采用独立性假设可能是表现更好的原因。另外，20NewsGroup 数据集较小，我们猜测提供更多的数据集时 TWE-2 和 TWE-3 性能表现会提升。未来我们将进行更多实验。</p>
+<h4 id="Examples-of-Topical-Word-Embeddings"><a href="#Examples-of-Topical-Word-Embeddings" class="headerlink" title="Examples of Topical Word Embeddings"></a>Examples of Topical Word Embeddings</h4><p>为了展示 TWE 模型的特点。我们选择了一些单词以及使用 TWE 模型获得不同主题下最相似的词。我们用了 Skip-Gram 来作为对比。</p>
+<p>在表格4中，我们展示了$bank$、$left$、$apple$ 三个词的最相似的词。对于词 $w$，我们第一行是 Skip-Gram模型获得的相似词，第二行和第三行是使用 TWE-2 获得的不同主题下的相似词，为 w#1 和 w#2。</p>
+<center>Table 4: TWE-2 和 Skip-Gram 中最相近的词</center>
+
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Words</th>
+<th style="text-align:center">Similar Word</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">bank</td>
+<td style="text-align:center">citibank, investment, river</td>
+</tr>
+<tr>
+<td style="text-align:center">bank#1</td>
+<td style="text-align:center">insurance, stock, investor</td>
+</tr>
+<tr>
+<td style="text-align:center">bank#2</td>
+<td style="text-align:center">river, edge, coast</td>
+</tr>
+<tr>
+<td style="text-align:center">left</td>
+<td style="text-align:center">right, leave, quit</td>
+</tr>
+<tr>
+<td style="text-align:center">left#1</td>
+<td style="text-align:center">moved, arrived, leave</td>
+</tr>
+<tr>
+<td style="text-align:center">left#2</td>
+<td style="text-align:center">right, bottom, hand</td>
+</tr>
+<tr>
+<td style="text-align:center">apple</td>
+<td style="text-align:center">macintosh, ios, juice</td>
+</tr>
+<tr>
+<td style="text-align:center">apple#1</td>
+<td style="text-align:center">peach, juice, strawberry</td>
+</tr>
+<tr>
+<td style="text-align:center">apple#2</td>
+<td style="text-align:center">mac, ipod, android</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>从表4中我们可以看到，Skip-Gram 中的相似词包含了多个意思。这表明 Skip-Gram 将多个语义组合成唯一一个词嵌入向量。相反的，TWE 模型中我们可以成功地区分多个主题下的单词语义。</p>
+<h3 id="Related-Word"><a href="#Related-Word" class="headerlink" title="Related Word"></a>Related Word</h3><p>IR 和 NLP 任务的关键取决于文本表示，而文本表示的基础是词表示。one-hot word representation 方法将每个单词表示为一个非零向量，其被广泛用为词袋（BOW）文档模型的基础（Manning, Raghavan and Schutze 2008）。然而存在着许多挑战，其中最关键的是能否考虑单词之间的语义和句法关系。</p>
+<ul>
+<li>词嵌入（Rumelhart, Hintont, and Williams 1986）</li>
+<li>词嵌入用于语言模型（Bengio et al. 2006; Mnih and Hinton 2008）</li>
+<li>词嵌入用于命名实体识别（Turian, Ratinov, and Bengio 2010）</li>
+<li>词嵌入用于消除歧义（Collobert et al. 2011）</li>
+<li>词嵌入用于解析（Socher et al. 2011）</li>
+</ul>
+<p>词嵌入可以将单词的语法和语义信息编码成连续向量，相似的单词在向量空间中的位置相近。</p>
+<p>优于计算度复杂，以前的词嵌入都是耗时的。最近（Mikolov et al. 2013）提出了两种有限的模型，Skip-Gram 和连续词袋模型（CBOW）来从大规模文本语料库中学习词嵌入。CBOW的训练目标是结合上下文的词嵌入来预测目标词，而 Skip-Gram 则是用每个目标词的嵌入来预测其上下文词。</p>
+<p>以前的词嵌入模型针对每个词只有唯一的向量表示，无法区分多种语义，因此研究人员提出了多原型模型：</p>
+<ul>
+<li>多原型向量空间模型（Reisinger and Mooney 2010），将每一个目标词的上下文分组，为每个组构建上下文向量。</li>
+<li>Huang的模型（Huang et al. 2012）：将上下文聚合，每个聚类产生一个唯一原型嵌入。</li>
+<li>概率模型（Tian et al. 2014）</li>
+<li>双语模型（Guo et al. 2014）</li>
+<li>非参数模型（Neelakantan et al. 2014）</li>
+</ul>
+<p>这些方法大多数都是为每个词构建多原型词嵌入。相对的，TEW模型使用考虑全部单词和上下文来确定潜在的主题来确定词意思。此外多原型模型能够被 TWE 模型收录。</p>
+<h3 id="Conclusion-and-Future-Work"><a href="#Conclusion-and-Future-Work" class="headerlink" title="Conclusion and Future Work"></a>Conclusion and Future Work</h3><p>本文中我们提出了三种主题词嵌入模型，用来进行上下文的词嵌入和文档嵌入。我们在两种任务上评估了我们的模型：基于语境的词相似度和文本分类。实验结果表明我们的模型，尤其是 TWE-1 在词相似度任务中表现最好，在文本分类中也具有不错的表现。</p>
+<p>我们从以下几个方面考虑未来的研究方向：</p>
+<ul>
+<li>在 LDA 中，主题数量需要预定确定。交叉验证可以用来找到合适的主题数，但不适合于大规模数据。我们将探讨非参数主题模型（Teh et al. 2006）的主题词嵌入。</li>
+<li>还有很多知识库可用，如 WordNet（Miller 1995），含有丰富的同音异义和多义词的语言知识。我们可能会套索将这些先验知识整合到主题词嵌入中的技巧。</li>
+<li>文档中通常包含其他信息，如分类标签、超链接和时间戳。我们可以将这些信息用于学习更具代表性的主题模型（Mcauliffe and Blei 2008; Zhu, Ahmed, and Xing 2009; Lacoste-Julien, Sha, and Jordan 2009），增强主题词嵌入。</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/翻译/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/论文/" rel="tag"># 论文</a>
+          
+            <a href="/tags/Word-Embeddings/" rel="tag"># Word Embeddings</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/09/Docker 容器与宿主时间同步/" rel="next" title="Docker 容器与macOS宿主时间同步">
+                <i class="fa fa-chevron-left"></i> Docker 容器与macOS宿主时间同步
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/20/macOS开启原始NTFS以及修复NTFS问题/" rel="prev" title="macOS 开启 NTFS 以及修复 NTFS 问题">
+                macOS 开启 NTFS 以及修复 NTFS 问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar2.JPG" alt="Dhq">
+            
+              <p class="site-author-name" itemprop="name">Dhq</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Dhqquan" title="GitHub &rarr; https://github.com/Dhqquan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:dhq@dhquan.cn" title="E-Mail &rarr; mailto:dhq@dhquan.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Topical-Word-Embeddings"><span class="nav-number">1.</span> <span class="nav-text">Topical Word Embeddings</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Abstract"><span class="nav-number">1.1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">1.2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Our-Models"><span class="nav-number">1.3.</span> <span class="nav-text">Our Models</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Skip-Gram"><span class="nav-number">1.3.1.</span> <span class="nav-text">Skip-Gram</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TWE-1"><span class="nav-number">1.3.2.</span> <span class="nav-text">TWE-1</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Contextual-Word-Embedding"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">Contextual Word Embedding</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Document-Embedding"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">Document Embedding</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TWE-2"><span class="nav-number">1.3.3.</span> <span class="nav-text">TWE-2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TWE-3"><span class="nav-number">1.3.4.</span> <span class="nav-text">TWE-3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Optimization-and-Parameter-Estimation"><span class="nav-number">1.3.5.</span> <span class="nav-text">Optimization and Parameter Estimation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Complexity-Analysis"><span class="nav-number">1.3.6.</span> <span class="nav-text">Complexity Analysis</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Experiments"><span class="nav-number">1.4.</span> <span class="nav-text">Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Contextual-Word-Similarity"><span class="nav-number">1.4.1.</span> <span class="nav-text">Contextual Word Similarity</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Datasets-and-Experiment-Setting"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">Datasets and Experiment Setting</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Evaluation-Result"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">Evaluation Result</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Text-Classification"><span class="nav-number">1.4.2.</span> <span class="nav-text">Text Classification</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Datasets-and-Experiment-Setting-1"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">Datasets and Experiment Setting</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Evaluation-Result-1"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">Evaluation Result</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Examples-of-Topical-Word-Embeddings"><span class="nav-number">1.4.3.</span> <span class="nav-text">Examples of Topical Word Embeddings</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Related-Word"><span class="nav-number">1.5.</span> <span class="nav-text">Related Word</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Conclusion-and-Future-Work"><span class="nav-number">1.6.</span> <span class="nav-text">Conclusion and Future Work</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Dhq</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+  
+  <script id="dsq-count-scr" src="https://blog-dhquan-cn.disqus.com/count.js" async></script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://blog.dhquan.cn/2019/02/12/【论文翻译】Topical-Word-Embeddings/";
+    this.page.identifier = "2019/02/12/【论文翻译】Topical-Word-Embeddings/";
+    this.page.title = '【论文翻译】Topical Word Embeddings';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://blog-dhquan-cn.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    loadComments();
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow: auto hidden;
+}
+</style>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
