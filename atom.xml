@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.dhquan.cn/"/>
-  <updated>2019-07-06T16:58:53.000Z</updated>
+  <updated>2019-07-06T17:34:48.000Z</updated>
   <id>http://blog.dhquan.cn/</id>
   
   <author>
@@ -18,19 +18,19 @@
   
   <entry>
     <title>Docker-Hexo 迁移</title>
-    <link href="http://blog.dhquan.cn/2019/07/07/Docker-Hexo%20%E8%BF%81%E7%A7%BB/"/>
-    <id>http://blog.dhquan.cn/2019/07/07/Docker-Hexo 迁移/</id>
-    <published>2019-07-06T16:58:54.000Z</published>
-    <updated>2019-07-06T16:58:53.000Z</updated>
+    <link href="http://blog.dhquan.cn/2019/07/07/Docker-Hexo-%E8%BF%81%E7%A7%BB/"/>
+    <id>http://blog.dhquan.cn/2019/07/07/Docker-Hexo-迁移/</id>
+    <published>2019-07-06T17:34:48.000Z</published>
+    <updated>2019-07-06T17:34:48.000Z</updated>
     
-    <content type="html"><![CDATA[<p>因为更换了新的电脑，记录一下迁移Docker-Hexo博客的过程。</p><h3 id="下载image"><a href="#下载image" class="headerlink" title="下载image"></a>下载image</h3>]]></content>
+    <content type="html"><![CDATA[<p>因为更换了新的电脑，记录一下迁移Docker-Hexo博客的过程。</p><h2 id="Docker-Hexo迁移"><a href="#Docker-Hexo迁移" class="headerlink" title="Docker-Hexo迁移"></a>Docker-Hexo迁移</h2><h3 id="下载image"><a href="#下载image" class="headerlink" title="下载image"></a>下载image</h3><p>之前在做Docker-hexo的时候上传过image，所以可以直接下载</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> docker pull dhquan/docker-hexo</span><br></pre></td></tr></table></figure><h3 id="创建container"><a href="#创建container" class="headerlink" title="创建container"></a>创建container</h3><p>详细的方法可以见<a href="/2019/02/02/Hexo-+-Docker-+-Github-搭建个人博客/" title="Hexo + Docker + Github 搭建个人博客">Hexo + Docker + Github 搭建个人博客</a> 中的<strong>Docker-Hexo Container</strong>。</p><h3 id="修改Docker容器的时间"><a href="#修改Docker容器的时间" class="headerlink" title="修改Docker容器的时间"></a>修改Docker容器的时间</h3><p>因为是dhquan/docker-hexo还是最开始的build的，所以还是UTC时区。<br>修改时区的方法可以见<a href="/2019/02/09/Docker-容器与宿主时间同步/" title="Docker 容器与macOS宿主时间同步">Docker 容器与macOS宿主时间同步</a>。</p><h3 id="迁移blog数据"><a href="#迁移blog数据" class="headerlink" title="迁移blog数据"></a>迁移blog数据</h3><p>只需要把整个blog文件夹复制过来就可以了。</p>]]></content>
     
     <summary type="html">
     
       
       
         &lt;p&gt;因为更换了新的电脑，记录一下迁移Docker-Hexo博客的过程。&lt;/p&gt;
-&lt;h3 id=&quot;下载image&quot;&gt;&lt;a href=&quot;#下载image&quot; class=&quot;headerlink&quot; title=&quot;下载image&quot;&gt;&lt;/a&gt;下载image&lt;/h3&gt;
+&lt;h2 id=&quot;Docker-Hexo迁移&quot;&gt;&lt;a href=&quot;#Docker-Hexo迁移&quot; class=&quot;headerlink&quot; title=&quot;Docker-Hexo迁移&quot;&gt;&lt;/a&gt;Docker
       
     
     </summary>
@@ -223,8 +223,8 @@
   
   <entry>
     <title>Docker 容器与macOS宿主时间同步</title>
-    <link href="http://blog.dhquan.cn/2019/02/09/Docker%20%E5%AE%B9%E5%99%A8%E4%B8%8E%E5%AE%BF%E4%B8%BB%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5/"/>
-    <id>http://blog.dhquan.cn/2019/02/09/Docker 容器与宿主时间同步/</id>
+    <link href="http://blog.dhquan.cn/2019/02/09/Docker-%E5%AE%B9%E5%99%A8%E4%B8%8E%E5%AE%BF%E4%B8%BB%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5/"/>
+    <id>http://blog.dhquan.cn/2019/02/09/Docker-容器与宿主时间同步/</id>
     <published>2019-02-09T09:41:11.000Z</published>
     <updated>2019-02-09T10:08:37.000Z</updated>
     
@@ -242,9 +242,9 @@
       <category term="建站" scheme="http://blog.dhquan.cn/categories/%E5%BB%BA%E7%AB%99/"/>
     
     
-      <category term="建站" scheme="http://blog.dhquan.cn/tags/%E5%BB%BA%E7%AB%99/"/>
-    
       <category term="Docker" scheme="http://blog.dhquan.cn/tags/Docker/"/>
+    
+      <category term="建站" scheme="http://blog.dhquan.cn/tags/%E5%BB%BA%E7%AB%99/"/>
     
       <category term="macOS" scheme="http://blog.dhquan.cn/tags/macOS/"/>
     
@@ -272,9 +272,9 @@
       <category term="建站" scheme="http://blog.dhquan.cn/categories/%E5%BB%BA%E7%AB%99/"/>
     
     
-      <category term="建站" scheme="http://blog.dhquan.cn/tags/%E5%BB%BA%E7%AB%99/"/>
-    
       <category term="Hexo" scheme="http://blog.dhquan.cn/tags/Hexo/"/>
+    
+      <category term="建站" scheme="http://blog.dhquan.cn/tags/%E5%BB%BA%E7%AB%99/"/>
     
       <category term="MathJax" scheme="http://blog.dhquan.cn/tags/MathJax/"/>
     
@@ -301,11 +301,11 @@
       <category term="建站" scheme="http://blog.dhquan.cn/categories/%E5%BB%BA%E7%AB%99/"/>
     
     
-      <category term="建站" scheme="http://blog.dhquan.cn/tags/%E5%BB%BA%E7%AB%99/"/>
-    
       <category term="Docker" scheme="http://blog.dhquan.cn/tags/Docker/"/>
     
       <category term="Hexo" scheme="http://blog.dhquan.cn/tags/Hexo/"/>
+    
+      <category term="建站" scheme="http://blog.dhquan.cn/tags/%E5%BB%BA%E7%AB%99/"/>
     
   </entry>
   

@@ -404,7 +404,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.dhquan.cn/2019/07/07/Docker-Hexo 迁移/">
+    <link itemprop="mainEntityOfPage" href="http://blog.dhquan.cn/2019/07/07/Docker-Hexo-迁移/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Dhq">
@@ -424,7 +424,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/07/07/Docker-Hexo 迁移/" class="post-title-link" itemprop="url">Docker-Hexo 迁移</a>
+                <a href="/2019/07/07/Docker-Hexo-迁移/" class="post-title-link" itemprop="url">Docker-Hexo 迁移</a>
               
             
           </h1>
@@ -449,13 +449,9 @@
                 
               
 
-              <time title="创建时间：2019-07-07 00:58:54 / 修改时间：00:58:53" itemprop="dateCreated datePublished" datetime="2019-07-07T00:58:54+08:00">2019-07-07</time>
+              <time title="创建时间：2019-07-07 01:34:48" itemprop="dateCreated datePublished" datetime="2019-07-07T01:34:48+08:00">2019-07-07</time>
             
 
-            
-              
-
-              
             
           </span>
 
@@ -489,8 +485,8 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
             
-                <a href="/2019/07/07/Docker-Hexo 迁移/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/07/07/Docker-Hexo 迁移/" itemprop="commentCount"></span>
+                <a href="/2019/07/07/Docker-Hexo-迁移/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/07/07/Docker-Hexo-迁移/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -521,7 +517,12 @@
         
           
             <p>因为更换了新的电脑，记录一下迁移Docker-Hexo博客的过程。</p>
-<h3 id="下载image"><a href="#下载image" class="headerlink" title="下载image"></a>下载image</h3>
+<h2 id="Docker-Hexo迁移"><a href="#Docker-Hexo迁移" class="headerlink" title="Docker-Hexo迁移"></a>Docker-Hexo迁移</h2><h3 id="下载image"><a href="#下载image" class="headerlink" title="下载image"></a>下载image</h3><p>之前在做Docker-hexo的时候上传过image，所以可以直接下载</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> docker pull dhquan/docker-hexo</span><br></pre></td></tr></table></figure>
+<h3 id="创建container"><a href="#创建container" class="headerlink" title="创建container"></a>创建container</h3><p>详细的方法可以见<a href="/2019/02/02/Hexo-+-Docker-+-Github-搭建个人博客/" title="Hexo + Docker + Github 搭建个人博客">Hexo + Docker + Github 搭建个人博客</a> 中的<strong>Docker-Hexo Container</strong>。</p>
+<h3 id="修改Docker容器的时间"><a href="#修改Docker容器的时间" class="headerlink" title="修改Docker容器的时间"></a>修改Docker容器的时间</h3><p>因为是dhquan/docker-hexo还是最开始的build的，所以还是UTC时区。<br>修改时区的方法可以见<a href="/2019/02/09/Docker-容器与宿主时间同步/" title="Docker 容器与macOS宿主时间同步">Docker 容器与macOS宿主时间同步</a>。</p>
+<h3 id="迁移blog数据"><a href="#迁移blog数据" class="headerlink" title="迁移blog数据"></a>迁移blog数据</h3><p>只需要把整个blog文件夹复制过来就可以了。</p>
+
           
         
       
@@ -1765,7 +1766,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.dhquan.cn/2019/02/09/Docker 容器与宿主时间同步/">
+    <link itemprop="mainEntityOfPage" href="http://blog.dhquan.cn/2019/02/09/Docker-容器与宿主时间同步/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Dhq">
@@ -1785,7 +1786,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/02/09/Docker 容器与宿主时间同步/" class="post-title-link" itemprop="url">Docker 容器与macOS宿主时间同步</a>
+                <a href="/2019/02/09/Docker-容器与宿主时间同步/" class="post-title-link" itemprop="url">Docker 容器与macOS宿主时间同步</a>
               
             
           </h1>
@@ -1850,8 +1851,8 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
             
-                <a href="/2019/02/09/Docker 容器与宿主时间同步/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/02/09/Docker 容器与宿主时间同步/" itemprop="commentCount"></span>
+                <a href="/2019/02/09/Docker-容器与宿主时间同步/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/02/09/Docker-容器与宿主时间同步/" itemprop="commentCount"></span>
                 </a>
               </span>
             

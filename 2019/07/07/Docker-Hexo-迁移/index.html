@@ -128,18 +128,18 @@
 
 
 
-  <meta name="description" content="Docker 容器与macOS宿主时间同步通过 Docker 搭建了自己的个人博客之后，在同步到 Github 上的时候发现 commit 的时间有问题。进入到容器中看了下，发现容器的时间是 UTC+0， 而我的电脑是 UTC+8 复制主机的 localtime12$ docker cp /etc/localtime hexo-server:/etc/$ docker cp /etc/localt">
-<meta name="keywords" content="建站,Docker,macOS">
+  <meta name="description" content="因为更换了新的电脑，记录一下迁移Docker-Hexo博客的过程。 Docker-Hexo迁移下载image之前在做Docker-hexo的时候上传过image，所以可以直接下载 1$ docker pull dhquan/docker-hexo 创建container详细的方法可以见Hexo + Docker + Github 搭建个人博客 中的Docker-Hexo Container。 修改">
+<meta name="keywords" content="Docker,Hexo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Docker 容器与macOS宿主时间同步">
-<meta property="og:url" content="http://blog.dhquan.cn/2019/02/09/Docker 容器与宿主时间同步/index.html">
+<meta property="og:title" content="Docker-Hexo 迁移">
+<meta property="og:url" content="http://blog.dhquan.cn/2019/07/07/Docker-Hexo-迁移/index.html">
 <meta property="og:site_name" content="Dhq&#39;s Blog">
-<meta property="og:description" content="Docker 容器与macOS宿主时间同步通过 Docker 搭建了自己的个人博客之后，在同步到 Github 上的时候发现 commit 的时间有问题。进入到容器中看了下，发现容器的时间是 UTC+0， 而我的电脑是 UTC+8 复制主机的 localtime12$ docker cp /etc/localtime hexo-server:/etc/$ docker cp /etc/localt">
+<meta property="og:description" content="因为更换了新的电脑，记录一下迁移Docker-Hexo博客的过程。 Docker-Hexo迁移下载image之前在做Docker-hexo的时候上传过image，所以可以直接下载 1$ docker pull dhquan/docker-hexo 创建container详细的方法可以见Hexo + Docker + Github 搭建个人博客 中的Docker-Hexo Container。 修改">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-09T10:08:37.000Z">
+<meta property="og:updated_time" content="2019-07-06T17:34:48.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Docker 容器与macOS宿主时间同步">
-<meta name="twitter:description" content="Docker 容器与macOS宿主时间同步通过 Docker 搭建了自己的个人博客之后，在同步到 Github 上的时候发现 commit 的时间有问题。进入到容器中看了下，发现容器的时间是 UTC+0， 而我的电脑是 UTC+8 复制主机的 localtime12$ docker cp /etc/localtime hexo-server:/etc/$ docker cp /etc/localt">
+<meta name="twitter:title" content="Docker-Hexo 迁移">
+<meta name="twitter:description" content="因为更换了新的电脑，记录一下迁移Docker-Hexo博客的过程。 Docker-Hexo迁移下载image之前在做Docker-hexo的时候上传过image，所以可以直接下载 1$ docker pull dhquan/docker-hexo 创建container详细的方法可以见Hexo + Docker + Github 搭建个人博客 中的Docker-Hexo Container。 修改">
 
 
 
@@ -148,7 +148,7 @@
 
 
 
-  <link rel="canonical" href="http://blog.dhquan.cn/2019/02/09/Docker 容器与宿主时间同步/">
+  <link rel="canonical" href="http://blog.dhquan.cn/2019/07/07/Docker-Hexo-迁移/">
 
 
 
@@ -158,7 +158,7 @@
   };
 </script>
 
-  <title>Docker 容器与macOS宿主时间同步 | Dhq's Blog</title>
+  <title>Docker-Hexo 迁移 | Dhq's Blog</title>
   
 
 
@@ -408,7 +408,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.dhquan.cn/2019/02/09/Docker 容器与宿主时间同步/">
+    <link itemprop="mainEntityOfPage" href="http://blog.dhquan.cn/2019/07/07/Docker-Hexo-迁移/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Dhq">
@@ -425,7 +425,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Docker 容器与macOS宿主时间同步
+          <h1 class="post-title" itemprop="name headline">Docker-Hexo 迁移
 
               
             
@@ -451,13 +451,9 @@
                 
               
 
-              <time title="创建时间：2019-02-09 17:41:11 / 修改时间：18:08:37" itemprop="dateCreated datePublished" datetime="2019-02-09T17:41:11+08:00">2019-02-09</time>
+              <time title="创建时间：2019-07-07 01:34:48" itemprop="dateCreated datePublished" datetime="2019-07-07T01:34:48+08:00">2019-07-07</time>
             
 
-            
-              
-
-              
             
           </span>
 
@@ -491,8 +487,8 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
             
-                <a href="/2019/02/09/Docker 容器与宿主时间同步/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/02/09/Docker 容器与宿主时间同步/" itemprop="commentCount"></span>
+                <a href="/2019/07/07/Docker-Hexo-迁移/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/07/07/Docker-Hexo-迁移/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -520,18 +516,12 @@
       
 
       
-        <h2 id="Docker-容器与macOS宿主时间同步"><a href="#Docker-容器与macOS宿主时间同步" class="headerlink" title="Docker 容器与macOS宿主时间同步"></a>Docker 容器与macOS宿主时间同步</h2><p>通过 Docker 搭建了自己的个人博客之后，在同步到 Github 上的时候发现 commit 的时间有问题。进入到容器中看了下，发现容器的时间是 UTC+0， 而我的电脑是 UTC+8</p>
-<h3 id="复制主机的-localtime"><a href="#复制主机的-localtime" class="headerlink" title="复制主机的 localtime"></a>复制主机的 localtime</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> docker cp /etc/localtime hexo-server:/etc/</span><br><span class="line"><span class="meta">$</span> docker cp /etc/localtime hexo-deploy:/etc/</span><br></pre></td></tr></table></figure>
-<p>但是在 macOS 会出现报错</p>
-<p>查了下发现 <code>/etc/localtime</code> 是一个链接文件，真正的 <code>localtime</code> 是 <code>/var/db/timezone/zoneinfo/Asia/Shanghai</code> 这个文件。</p>
-<p>把这个真正的 <code>localtime</code> 文件复制到容器就可以了</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> cat /var/db/timezone/zoneinfo/Asia/Shanghai &gt; ~/localtime</span><br><span class="line"><span class="meta">$</span> docker cp ~/localtime hexo-server:/etc/</span><br><span class="line"><span class="meta">$</span> docker cp ~/localtime hexo-deploy:/etc/</span><br></pre></td></tr></table></figure>
-<h3 id="创建-Dockerfile-的时候将-localtime-文件替换"><a href="#创建-Dockerfile-的时候将-localtime-文件替换" class="headerlink" title="创建 Dockerfile 的时候将 localtime 文件替换"></a>创建 Dockerfile 的时候将 localtime 文件替换</h3><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">COPY</span> localtime /etc/localtime</span><br></pre></td></tr></table></figure>
-<p>将上述语句写入 Dockerfile 中。重新 docker build 生成新的 Image 就可以了。</p>
-<p>因为我已经通过第一个方法解决了时间问题，就没有重新生成新的 Image 了。</p>
-<h3 id="挂载主机的-localtime-到容器中"><a href="#挂载主机的-localtime-到容器中" class="headerlink" title="挂载主机的 localtime 到容器中"></a>挂载主机的 localtime 到容器中</h3><p>已我的 Hexo-server 为例，在第 6 行添加。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> docker run -p 4000:80 --name hexo-server -d \</span><br><span class="line">-v &#123;你的博客文件夹路径&#125;/.ssh:/root/.ssh \</span><br><span class="line">-v &#123;你的博客文件夹路径&#125;/source:/Hexo/source \</span><br><span class="line">-v &#123;你的博客文件夹路径&#125;/themes:/Hexo/themes \</span><br><span class="line">-v &#123;你的博客文件夹路径&#125;/_config.yml:/Hexo/_config.yml \</span><br><span class="line">-v ~/localtime:/etc/localtime</span><br><span class="line">xxx/hexo &#123;你的 github username&#125; &#123;你的 github email&#125; server</span><br></pre></td></tr></table></figure>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.jianshu.com/p/ce5408b33972" target="_blank" rel="noopener">Docker 容器与主机时间同步</a></p>
+        <p>因为更换了新的电脑，记录一下迁移Docker-Hexo博客的过程。</p>
+<h2 id="Docker-Hexo迁移"><a href="#Docker-Hexo迁移" class="headerlink" title="Docker-Hexo迁移"></a>Docker-Hexo迁移</h2><h3 id="下载image"><a href="#下载image" class="headerlink" title="下载image"></a>下载image</h3><p>之前在做Docker-hexo的时候上传过image，所以可以直接下载</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> docker pull dhquan/docker-hexo</span><br></pre></td></tr></table></figure>
+<h3 id="创建container"><a href="#创建container" class="headerlink" title="创建container"></a>创建container</h3><p>详细的方法可以见<a href="/2019/02/02/Hexo-+-Docker-+-Github-搭建个人博客/" title="Hexo + Docker + Github 搭建个人博客">Hexo + Docker + Github 搭建个人博客</a> 中的<strong>Docker-Hexo Container</strong>。</p>
+<h3 id="修改Docker容器的时间"><a href="#修改Docker容器的时间" class="headerlink" title="修改Docker容器的时间"></a>修改Docker容器的时间</h3><p>因为是dhquan/docker-hexo还是最开始的build的，所以还是UTC时区。<br>修改时区的方法可以见<a href="/2019/02/09/Docker-容器与宿主时间同步/" title="Docker 容器与macOS宿主时间同步">Docker 容器与macOS宿主时间同步</a>。</p>
+<h3 id="迁移blog数据"><a href="#迁移blog数据" class="headerlink" title="迁移blog数据"></a>迁移blog数据</h3><p>只需要把整个blog文件夹复制过来就可以了。</p>
 
       
     </div>
@@ -555,11 +545,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/建站/" rel="tag"># 建站</a>
-          
             <a href="/tags/Docker/" rel="tag"># Docker</a>
           
-            <a href="/tags/macOS/" rel="tag"># macOS</a>
+            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
           
         </div>
       
@@ -572,8 +560,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/02/04/Hexo-中开启及修复渲染-MathJax-问题/" rel="next" title="Hexo 中开启及修复渲染 MathJax 问题">
-                <i class="fa fa-chevron-left"></i> Hexo 中开启及修复渲染 MathJax 问题
+              <a href="/2019/03/08/Neural-Networks-and-Deep-Learning-Week4/" rel="next" title="Neural Networks and Deep Learning Week4">
+                <i class="fa fa-chevron-left"></i> Neural Networks and Deep Learning Week4
               </a>
             
           </div>
@@ -581,10 +569,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/02/12/【论文翻译】Topical-Word-Embeddings/" rel="prev" title="【论文翻译】Topical Word Embeddings">
-                【论文翻译】Topical Word Embeddings <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -794,7 +778,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-容器与macOS宿主时间同步"><span class="nav-number">1.</span> <span class="nav-text">Docker 容器与macOS宿主时间同步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#复制主机的-localtime"><span class="nav-number">1.1.</span> <span class="nav-text">复制主机的 localtime</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建-Dockerfile-的时候将-localtime-文件替换"><span class="nav-number">1.2.</span> <span class="nav-text">创建 Dockerfile 的时候将 localtime 文件替换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#挂载主机的-localtime-到容器中"><span class="nav-number">1.3.</span> <span class="nav-text">挂载主机的 localtime 到容器中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">1.4.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-Hexo迁移"><span class="nav-number">1.</span> <span class="nav-text">Docker-Hexo迁移</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载image"><span class="nav-number">1.1.</span> <span class="nav-text">下载image</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建container"><span class="nav-number">1.2.</span> <span class="nav-text">创建container</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改Docker容器的时间"><span class="nav-number">1.3.</span> <span class="nav-text">修改Docker容器的时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迁移blog数据"><span class="nav-number">1.4.</span> <span class="nav-text">迁移blog数据</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -948,9 +932,9 @@
 
 <script>
   var disqus_config = function() {
-    this.page.url = "http://blog.dhquan.cn/2019/02/09/Docker 容器与宿主时间同步/";
-    this.page.identifier = "2019/02/09/Docker 容器与宿主时间同步/";
-    this.page.title = 'Docker 容器与macOS宿主时间同步';
+    this.page.url = "http://blog.dhquan.cn/2019/07/07/Docker-Hexo-迁移/";
+    this.page.identifier = "2019/07/07/Docker-Hexo-迁移/";
+    this.page.title = 'Docker-Hexo 迁移';
     };
   function loadComments() {
     var d = document, s = d.createElement('script');
